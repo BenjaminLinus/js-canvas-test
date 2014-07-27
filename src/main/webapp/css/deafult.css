@@ -46,3 +46,19 @@ div.js-table-header-row h4 {
 	margin: 0px;
 	padding: 14px;
 }
+
+div.bottom-sign {
+    text-align: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+a.custom-link, a.custom-link:visited {
+    color: #005a8c;
+    text-decoration: none;
+}
+
+a.custom-link:hover {
+    color: #005a8c;
+    text-decoration: underline;
+}
