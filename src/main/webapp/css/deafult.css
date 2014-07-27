@@ -3,7 +3,6 @@ h3 {
 }
 
 div#main-content {
-	text-align: center;
 }
 
 div#test-results {
@@ -20,31 +19,11 @@ div.info-block {
 	text-align: left;
 }
 
-div.js-table-cell {
-	display: inline-block;
-	border-left: #000000 solid 1px;
-	border-bottom: #000000 solid 1px;
-}
-
 div#test-table {
 	padding: 10px;
 }
 
 div#js-table {
-	border-top: #000000 solid 1px;
-	border-right: #000000 solid 1px;
-	display: inline-block;
-}
-
-div.js-table-header-row {
-	border-left: #000000 solid 1px;
-	border-bottom: #000000 solid 1px;
-	padding: 0px;
-}
-
-div.js-table-header-row h4 {
-	margin: 0px;
-	padding: 14px;
 }
 
 div.bottom-sign {

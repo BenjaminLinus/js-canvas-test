@@ -10,8 +10,6 @@ function JsTable(rowsCount, colsCount, cellPadding, cellWidth) {
     this.testTable;
     this.JS_TABLE_ROW_STYLENAME = 'js-table-row';
     this.JS_TABLE_CELL_ID_TEMPLATE = 'js-table-cell';
-    this.JS_TABLE_CELL_STYLENAME = that.JS_TABLE_CELL_ID_TEMPLATE;
-    this.JS_TABLE_HEADER_ROW_STYLENAME = 'js-table-header-row';
     this.JS_TABLE_HEADER_CAPTION = 'Test javascript table';
 
     CustomTable.call(this);
@@ -19,8 +17,10 @@ function JsTable(rowsCount, colsCount, cellPadding, cellWidth) {
 
     this.createJsTableCell = function(i, j) {
     	var innerHTML = '<div id="'+that.JS_TABLE_CELL_ID_TEMPLATE+'-'+i+'-'+j+'"'+
-    	' style="width: '+that.CELL_WIDTH+'px; padding: '+that.CELL_PADDING+'px;"'+
-    	' class="'+ that.JS_TABLE_CELL_STYLENAME+'">';
+    	' style="width: '+that.CELL_WIDTH+'px; padding: '+that.CELL_PADDING+'px; '+
+    	'display: inline-block; border-left: #000000 solid 1px;'+
+    	' border-bottom: #000000 solid 1px;"'+
+    	' >';
     	innerHTML += '' + that.getRandomValue();
     	innerHTML += '</div>';
     	return innerHTML;
@@ -36,8 +36,9 @@ function JsTable(rowsCount, colsCount, cellPadding, cellWidth) {
     }
 
     this.createJsTableHeaderRow = function() {
-    	var innerHTML = '<div class="' + that.JS_TABLE_HEADER_ROW_STYLENAME+'">';
-    	innerHTML += '<h4>'+that.JS_TABLE_HEADER_CAPTION+'</h4>';
+    	var innerHTML = '<div style="border-left: #000000 solid 1px; '+
+    	    'border-bottom: #000000 solid 1px; padding: 0px;">';
+    	innerHTML += '<h4 style="margin: 0px; padding: 14px;">'+that.JS_TABLE_HEADER_CAPTION+'</h4>';
     	innerHTML += '</div>';
     	return innerHTML;
     }
@@ -46,7 +47,8 @@ function JsTable(rowsCount, colsCount, cellPadding, cellWidth) {
     	testTable = document.getElementById(elId);
     	testTable.innerHTML = '';
     	var t = '';
-    	t += '<div id="'+that.JS_TABLE_ID+'">';
+    	t += '<div id="'+that.JS_TABLE_ID+'" style="border-top: #000000 solid 1px; '+
+    	    'border-right: #000000 solid 1px; display: inline-block;" >';
     	t += that.createJsTableHeaderRow();
     	for (var i = 0; i < that.ROWS_COUNT; ++i) {
     		t += that.createJsTableRow(i);

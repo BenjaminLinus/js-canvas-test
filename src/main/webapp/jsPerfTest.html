@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/js-perf-globals.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/benchmark.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/custom-table.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/js-table.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/kinetic-v5.1.0.min.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/kineticjs-table.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/pixi.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/pixijs-table.js"></script>
+<script type="text/javascript" src="http://repo.zebkit.org/latest/zebra.min.js"></script>
+<script type="text/javascript" src="http://www.alfrescodev.com/samples/js-canvas-test/js/zebrajs-table.js"></script>
+
+<h3>Javascript perfomance test</h3>
+<div id="main-content" style="text-align: center;">
+    <div>
+        <div id="description-area" style="text-align: left; padding-left: 20px;" class="info-block">
+            These javascript tests desgned to compare UI perfomance
+            of javascript DOM model, kineticjs library, pixijs library
+            and zebrajs library. To compare perfomance, test methods
+            calculate time of filling a small sample table.
+        </div>
+    </div>
+    <div>
+        <div id="controls-area" class="info-block"></div>
+    </div>
+    <div>
+        <div id="test-results" class="info-block"></div>
+    </div>
+    <div id="js-test-table"></div>
+    <div id="kinetic-test-table"></div>
+    <div id="pixi-test-table"></div>
+    <div id="zebra-test-table"></div>
+</div>
+<script>
+    Benchmark.prototype.setup = function() {
+    var JS_TABLE_CONTAINER_ID = 'js-test-table';
+    var KINETIC_TABLE_CONTAINER_ID = 'kinetic-test-table';
+    var PIXI_TABLE_CONTAINER_ID = 'pixi-test-table';
+    var ZEBRA_TABLE_CONTAINER_ID = 'zebra-test-table';
+    var MIN_BENCHMARK_REPEATS = 20;
+    var CONTROLS_AREA_ID = 'controls-area';
+    var ROWS_COUNT = 100;
+    var COLS_COUNT = 10;
+    var CELL_PADDING = 10;
+    var CELL_WIDTH = 50;
+
+    var testSuite;
+    //var jsTable = null;
+    //var kineticJsTable = null;
+    //var pixijsTable = null;
+    //var zebrajsTable;
+
+    function log(msg) {
+    document.getElementById('test-results').innerHTML += msg + '<br />';
+    }
+
+    var tests = new Array();
+    var testI = 0;
+
+    tests[0] = function(){
+    if (jsTable == null) {
+        //alert();
+        jsTable = new JsTable(ROWS_COUNT, COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+        jsTable.createJsTable(JS_TABLE_CONTAINER_ID);
+    }
+    }
+    tests[0].title = 'Create javascript table test';
+    tests[0].setUp = null;
+
+    tests[1] = function(){
+    jsTable.fillJsTable();
+    }
+    tests[1].title = 'Fill javascript table test';
+    tests[1].setUp = function() {
+    if (jsTable == null)
+    tests[0]();
+    };
+
+    tests[2] = function(){
+    if (kineticJsTable == null) {
+        kineticJsTable = new KineticJsTable(KINETIC_TABLE_CONTAINER_ID, ROWS_COUNT,
+        COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+        kineticJsTable.createKineticJsTable();
+    }
+    }
+    tests[2].title = 'Create kineticJs table test';
+    tests[2].setUp = null;
+
+    tests[3] = function(){
+    kineticJsTable.fillTable();
+    }
+    tests[3].title = 'Fill kineticJs table test';
+    tests[3].setUp = function() {
+    if (kineticJsTable == null)
+    tests[2]();
+    };
+
+    tests[4] = function(){
+    if (pixijsTable == null)
+        pixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID, ROWS_COUNT,
+        COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+        pixijsTable.createTable();
+    }
+    tests[4].title = 'Create pixiJs table test';
+    tests[4].setUp = null;
+
+    tests[5] = function(){
+    pixijsTable.fillTable();
+    }
+    tests[5].title = 'Fill pixiJs table test';
+    tests[5].setUp = function() {
+    tests[4]();
+    };
+
+    tests[6] = function(){
+        if (zebrajsTable == null) {
+            zebrajsTable = new ZebrajsTable(ZEBRA_TABLE_CONTAINER_ID, ROWS_COUNT,
+            COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+            zebrajsTable.createTable();
+        }
+    }
+    tests[6].title = 'Create zebraJs table test';
+    tests[6].setUp = null;
+
+    tests[7] = function(){
+    zebrajsTable.fillTable();
+    }
+    tests[7].title = 'Fill zebraJs table test';
+    tests[7].setUp = function() {
+    if (zebrajsTable == null)
+    tests[6]();
+    };
+
+    for (var i in tests) {
+    if (tests[i].setUp != null) {
+    tests[i].setUp();
+    }
+    }
+    };
+</script>
+
+
+
+
+</body>
+</html>
