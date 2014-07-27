@@ -8,7 +8,7 @@ gradle jettyRun
 
 Than, open the URL http://localhost:8080/js-canvas-test/index.html in browser.
 
-Tipical results of the test:
+Tipical results of the test using Google Chrome (Windows, Intel Core I3):
 
 DOM model: 210 ops/sec.
 Kineticjs: 8.22 ops/sec.
