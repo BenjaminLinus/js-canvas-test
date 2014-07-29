@@ -10,6 +10,7 @@ function JsTable(rowsCount, colsCount, cellPadding, cellWidth) {
     this.testTable;
     this.JS_TABLE_ROW_STYLENAME = 'js-table-row';
     this.JS_TABLE_CELL_ID_TEMPLATE = 'js-table-cell';
+    var JS_TABLE_CELL_SPAN_ID_TEMPLATE = 'js-table-cell-span';
     this.JS_TABLE_HEADER_CAPTION = 'Test javascript table';
 
     CustomTable.call(this);
@@ -20,9 +21,9 @@ function JsTable(rowsCount, colsCount, cellPadding, cellWidth) {
     	' style="width: '+that.CELL_WIDTH+'px; padding: '+that.CELL_PADDING+'px; '+
     	'display: inline-block; border-left: #000000 solid 1px;'+
     	' border-bottom: #000000 solid 1px;"'+
-    	' >';
+    	' ><span id ="'+JS_TABLE_CELL_SPAN_ID_TEMPLATE+'-'+i+'-'+j+'">';
     	innerHTML += '' + that.getRandomValue();
-    	innerHTML += '</div>';
+    	innerHTML += '</span></div>';
     	return innerHTML;
     }
 
@@ -57,8 +58,14 @@ function JsTable(rowsCount, colsCount, cellPadding, cellWidth) {
     	testTable.innerHTML += t;
     }
 
+    var tval;
+
     this.fillJsTableCell = function(i, j) {
-    	document.getElementById(that.JS_TABLE_CELL_ID_TEMPLATE+'-'+i+'-'+j).innerHTML = that.getRandomValue();
+    	document.getElementById(JS_TABLE_CELL_SPAN_ID_TEMPLATE+'-'+i+'-'+j).innerHTML = that.getRandomValue();
+        //console.log('fillJsTableCell!');
+        //console.log(i+'-'+j+' width = ' + document.getElementById(JS_TABLE_CELL_SPAN_ID_TEMPLATE+'-'+i+'-'+j).clientWidth );
+        tval = document.getElementById(JS_TABLE_CELL_SPAN_ID_TEMPLATE+'-'+i+'-'+j).clientWidth;
+        //
     }
 
     this.fillJsTable = function(msg) {

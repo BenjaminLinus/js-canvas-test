@@ -52,7 +52,11 @@ function ZebrajsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth)
     this.fillTable = function() {
         for (var i in labels) {
             labels[i].setValue('' + getRandomValue());
+            //console.log('isValid1 = ' + labels[i].isValid);
+            //labels[i].validate();
+            //console.log('isValid2 = ' + labels[i].isValid);
         }
+        mainPanel.validate();
     }
 
     this.createTable = function() {

@@ -12,7 +12,7 @@
     var jsTable = null;
     var kineticJsTable = null;
     var pixijsTable = null;
-    var zebrajsTable;
+    var zebrajsTable = null;
 
 	function log(msg) {
 		document.getElementById('test-results').innerHTML += msg + '<br />';
@@ -72,7 +72,8 @@
     };
 
     tests[6] = function(){
-        zebrajsTable = new ZebrajsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+        if (zebrajsTable == null)
+            zebrajsTable = new ZebrajsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
             COLS_COUNT, CELL_PADDING, CELL_WIDTH);
         zebrajsTable.createTable();
     }
@@ -170,7 +171,7 @@
         //log('Main method started...');
         createControls();
         //runTest();
-        //tests[4]();
+        tests[4]();
         //setInterval(tests[4], 1111);
     }
 
