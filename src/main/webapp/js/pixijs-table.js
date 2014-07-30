@@ -1,4 +1,4 @@
-function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) {
+function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth, isWebGl) {
 
     var that = this;
     this.containerId = containerId;
@@ -16,8 +16,19 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) 
     var graphics = null;
     var stage = null;
     var textValues = new Array();
-    var renderer = PIXI.autoDetectRenderer(fullWidth, fullHeight);
+    //var renderer = PIXI.autoDetectRenderer(fullWidth, fullHeight);
     //renderer = new PIXI.CanvasRenderer(fullWidth, fullHeight);
+    //alert('1');
+    try {
+        if (isWebGl)
+            var renderer = new PIXI.WebGLRenderer(fullWidth, fullHeight);
+        else
+            var renderer = new PIXI.CanvasRenderer(fullWidth, fullHeight);
+    }
+    catch  (ex) {
+        var renderer = null;
+    }
+    //alert(renderer);
     var b = false;
     var invertFilter = new PIXI.InvertFilter();
 
@@ -63,6 +74,10 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) 
         textValues = [];
         testTable = document.getElementById(that.containerId);
         testTable.innerHTML = '';
+        if (renderer == null) {
+            testTable.innerHTML += '<div class="create-renderer-error" style="font-weight: bold;">Could not create renderer</div>';
+            return;
+        }
         stage = new PIXI.Stage(0xFFFFFF, true);
         stage.setInteractive(true);
 
