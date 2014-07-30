@@ -1,6 +1,11 @@
 (function () {
 
 	var TABLE_CONTAINER_ID = 'test-table';
+    var JS_TABLE_CONTAINER_ID = TABLE_CONTAINER_ID;
+    var KINETIC_TABLE_CONTAINER_ID = TABLE_CONTAINER_ID;
+    var PIXI_TABLE_CONTAINER_ID1 = TABLE_CONTAINER_ID;
+    var PIXI_TABLE_CONTAINER_ID2 = TABLE_CONTAINER_ID;
+    var ZEBRA_TABLE_CONTAINER_ID = TABLE_CONTAINER_ID;
 	var MIN_BENCHMARK_REPEATS = 20;
 	var CONTROLS_AREA_ID = 'controls-area';
 	this.ROWS_COUNT = 100;
@@ -24,16 +29,16 @@
 
     var ti = 0;
 
-	tests[ti] = function(){
+    tests[ti] = function(){
         jsTable = new JsTable(ROWS_COUNT, COLS_COUNT, CELL_PADDING, CELL_WIDTH);
-		jsTable.createJsTable(TABLE_CONTAINER_ID);
+        jsTable.createJsTable(JS_TABLE_CONTAINER_ID);
     }
     tests[ti].title = 'Create javascript table test';
     tests[ti].setUp = null;
     ++ti;
 
     tests[ti] = function(){
-    	jsTable.fillJsTable();
+        jsTable.fillJsTable();
     }
     tests[ti].title = 'Fill javascript table test';
     tests[ti].setUp = function(ti) {
@@ -43,9 +48,9 @@
     ++ti;
 
     tests[ti] = function(){
-    	kineticJsTable = new KineticJsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
-    	    COLS_COUNT, CELL_PADDING, CELL_WIDTH);
-    	kineticJsTable.createKineticJsTable();
+        kineticJsTable = new KineticJsTable(KINETIC_TABLE_CONTAINER_ID, ROWS_COUNT,
+            COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+        kineticJsTable.createKineticJsTable();
     }
     tests[ti].title = 'Create kineticJs table test';
     tests[ti].setUp = null;
@@ -63,7 +68,7 @@
 
     tests[ti] = function(){
         if (pixijsTable == null)
-            pixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+            pixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID1, ROWS_COUNT,
                 COLS_COUNT, CELL_PADDING, CELL_WIDTH, true);
         pixijsTable.createTable();
     }
@@ -82,7 +87,7 @@
 
     tests[ti] = function(){
         if (cPixijsTable == null)
-            cPixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+            cPixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID2, ROWS_COUNT,
                 COLS_COUNT, CELL_PADDING, CELL_WIDTH, false);
         cPixijsTable.createTable();
     }
@@ -101,8 +106,8 @@
 
     tests[ti] = function(){
         if (zebrajsTable == null)
-            zebrajsTable = new ZebrajsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
-            COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+            zebrajsTable = new ZebrajsTable(ZEBRA_TABLE_CONTAINER_ID, ROWS_COUNT,
+                COLS_COUNT, CELL_PADDING, CELL_WIDTH);
         zebrajsTable.createTable();
     }
     tests[ti].title = 'Create zebraJs table test';
@@ -198,18 +203,23 @@
         }
     }
 
-    function initPixi(callBack) {
-        if (pixijsTable == null)
-            pixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
-                COLS_COUNT, CELL_PADDING, CELL_WIDTH, true);
-        if (!pixijsTable.fontsLoaded) {
-            pixijsTable.setUpFonts(callBack);
-        }
+    function initPixi2(callBack) {
         if (cPixijsTable == null)
-            cPixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+            cPixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID2, ROWS_COUNT,
                 COLS_COUNT, CELL_PADDING, CELL_WIDTH, false);
         if (!cPixijsTable.fontsLoaded) {
             cPixijsTable.setUpFonts(callBack);
+        }
+    }
+
+    function initPixi(callBack) {
+        if (pixijsTable == null)
+            pixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID1, ROWS_COUNT,
+                COLS_COUNT, CELL_PADDING, CELL_WIDTH, true);
+        if (!pixijsTable.fontsLoaded) {
+            pixijsTable.setUpFonts(function() {
+                initPixi2(callBack);
+            });
         }
     }
 

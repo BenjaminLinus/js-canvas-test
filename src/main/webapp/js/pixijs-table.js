@@ -67,6 +67,10 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth, 
         for (var i in textValues) {
             textValues[i].setText('' + getRandomValue());
         }
+        if (renderer != null) {
+            testTable = document.getElementById(that.containerId);
+            testTable.innerHTML = '<div class="create-renderer-error" style="font-weight: bold;">Could not create renderer</div>';
+        }
         renderer.render(stage);
     }
 
@@ -76,7 +80,7 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth, 
         testTable.innerHTML = '';
         if (renderer == null) {
             testTable.innerHTML += '<div class="create-renderer-error" style="font-weight: bold;">Could not create renderer</div>';
-            return;
+            //return;
         }
         stage = new PIXI.Stage(0xFFFFFF, true);
         stage.setInteractive(true);
