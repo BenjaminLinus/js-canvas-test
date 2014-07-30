@@ -9,20 +9,22 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) 
     this.CELL_HEIGHT = 20;
     this.PADDING_TOP = 20;
     this.JS_TABLE_HEADER_CAPTION = 'Test pixijs table';
-    var rWidth;
-    var rHeight;
-    var fullWidth;
-    var fullHeight;
+    var rWidth = (that.cellPadding * 2 + that.cellWidth);
+    var rHeight = (that.cellPadding * 2 + that.CELL_HEIGHT);
+    var fullWidth = rWidth * that.colsCount;
+    var fullHeight = rHeight * (that.rowsCount + 1) + that.PADDING_TOP;
     var graphics = null;
     var stage = null;
     var textValues = new Array();
-    var renderer = null;
+    var renderer = PIXI.autoDetectRenderer(fullWidth, fullHeight);
+    //renderer = new PIXI.CanvasRenderer(fullWidth, fullHeight);
     var b = false;
+    var invertFilter = new PIXI.InvertFilter();
 
     CustomTable.call(this);
     var getRandomValue = this.getRandomValue;
 
-    var fontsLoaded = false;
+    this.fontsLoaded = false;
 
     this.createCell = function(i, j) {
 
@@ -31,14 +33,9 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) 
         graphics.lineStyle(1, 0x000000, 1);
         graphics.drawRect(( j ) * rWidth, rHeight * ( i + 1 ) + that.PADDING_TOP,
             rWidth, rHeight );
-        var style = {font:"normal 14px ArialBitMap", fill: "black", align:"center",
+        var style = {font:"normal 16px ArialBitmap11", fill: "black", align:"center",
         strokeThickness: 0};
-        //var textVal = new PIXI.Text('' + val, style);
         var textVal = new PIXI.BitmapText('' + val, style);
-
-        // center the sprites anchor point
-        //textVal.anchor.x = 0.5;
-        //textVal.anchor.y = 0.5;
 
         // move the sprite t the center of the screen
         textVal.position.x = ( j + 0.5 ) * rWidth - textVal.textWidth / 2;
@@ -62,22 +59,13 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) 
         renderer.render(stage);
     }
 
-    function createTableCallback() {
-        alert('createTableCallback');
-        fontsLoaded = true;
-        console.log('createTable!');
+    this.createTable = function() {
         textValues = [];
         testTable = document.getElementById(that.containerId);
         testTable.innerHTML = '';
-        rWidth = (that.cellPadding * 2 + that.cellWidth);
-        rHeight = (that.cellPadding * 2 + that.CELL_HEIGHT);
-        fullWidth = rWidth * that.colsCount;
-        fullHeight = rHeight * (that.rowsCount + 1) + that.PADDING_TOP;
         stage = new PIXI.Stage(0xFFFFFF, true);
         stage.setInteractive(true);
 
-        if (renderer == null)
-            renderer = PIXI.autoDetectRenderer(fullWidth, fullHeight);
         renderer.clearBeforeRender = true;
 
         renderer.view.style.display = "inline-block";
@@ -89,12 +77,13 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) 
         graphics.lineStyle(1, 0x000000, 1);
         graphics.drawRect(0, that.PADDING_TOP, fullWidth-1, fullHeight - that.PADDING_TOP - 1);
 
-        var style = {font:"bold 22px ArialBitMap", fill: "white", align:"center",
+        var style = {font:"bold 20px ArialBitmap11", fill: "white", align:"center",
             strokeThickness: 0
             //, tint: 0x0000FF
             };
         //var headText = new PIXI.Text(that.JS_TABLE_HEADER_CAPTION, style);
         var headText = new PIXI.BitmapText(that.JS_TABLE_HEADER_CAPTION, style);
+        //headText.filters = [invertFilter];
         //headText.tint = 0xFFFFFF;
         // center the sprites anchor point
         //headText.anchor.x = 0.5;
@@ -110,20 +99,27 @@ function PixijsTable(containerId, rowsCount, colsCount, cellPadding, cellWidth) 
         renderer.render(stage);
     }
 
-    this.createTable = function() {
-        var fontsToLoad = ["fonts/arial.xml"];
-        // create a new loader
-        var fontsLoader = new PIXI.AssetLoader(fontsToLoad, false);
+    function fonsLoadCallback(callBack) {
+        that.fontsLoaded = true;
+        if (callBack != null) {
+            callBack();
+        }
+    }
 
-        fontsLoader.onComplete = createTableCallback;
-        if (!fontsLoaded) {
-            //begin load
-            //alert('fonts load....' + fontsLoader);
-            fontsLoader.load();
-        }
-        else {
-            createTableCallback();
-        }
+    this.setUpFonts = function(callBack) {
+        that.setUpFontsGlobal('', false, callBack);
+    }
+
+    this.setUpFontsGlobal = function(globalPath, crossOrigin, callBack) {
+        var fontsToLoad = [globalPath + "fonts/arial11.xml"];
+        // create a new loader
+        var fontsLoader = new PIXI.AssetLoader(fontsToLoad, crossOrigin);
+
+        fontsLoader.onComplete = function() {
+            fonsLoadCallback(callBack);
+        };
+        fontsLoader.load();
+
     }
 
 }

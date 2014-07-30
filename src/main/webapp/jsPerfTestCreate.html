@@ -124,6 +124,14 @@
                 tests[6]();
         };
 
+        if (pixijsTable == null) {
+            pixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID, ROWS_COUNT,
+                    COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+        }
+        if (!pixijsTable.fontsLoaded) {
+            pixijsTable.setUpFontsGlobal(fontsPath, true, function() { pixijsTable.createTable(); });
+        }
+
     };
 </script>
 

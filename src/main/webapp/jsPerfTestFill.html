@@ -102,11 +102,19 @@
 
         tests[4] = function(){
             console.log('test4!');
-            if (pixijsTable == null)
+            if (pixijsTable == null) {
                 console.log('pixi init!');
-            pixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID, ROWS_COUNT,
+                pixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID, ROWS_COUNT,
                     COLS_COUNT, CELL_PADDING, CELL_WIDTH);
-            pixijsTable.createTable();
+            }
+
+            if (pixijsTable.fontsLoaded) {
+                pixijsTable.createTable();
+            }
+            else {
+                pixijsTable.setUpFontsGlobal(fontsPath, true, function() { pixijsTable.createTable(); });
+            }
+
         }
         tests[4].title = 'Create pixiJs table test';
         tests[4].setUp = null;

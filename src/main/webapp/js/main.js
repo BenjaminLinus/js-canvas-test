@@ -61,7 +61,7 @@
         pixijsTable.createTable();
     }
     tests[4].title = 'Create pixiJs table test';
-    tests[4].setUp = null;
+    tests[4].setUp = null;;
 
     tests[5] = function(){
         pixijsTable.fillTable();
@@ -130,8 +130,21 @@
     }
 
     var tryRunTest = function(i, onComplete) {
-        if (i < tests.length)
-            runTest(i, onComplete);
+        if (i < tests.length) {
+            if ( i == 5 || i==4 ) {
+                if (pixijsTable == null)
+                    pixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+                        COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+                if (pixijsTable.fontsLoaded) {
+                    runTest(i, onComplete);
+                }
+                else {
+                    pixijsTable.setUpFonts(function() { runTest(i, onComplete) });
+                }
+            }
+            else
+                runTest(i, onComplete);
+        }
     }
 
     var createControls = function() {
@@ -171,7 +184,7 @@
         //log('Main method started...');
         createControls();
         //runTest();
-        tests[4]();
+        //tests[4]();
         //setInterval(tests[4], 1111);
     }
 
