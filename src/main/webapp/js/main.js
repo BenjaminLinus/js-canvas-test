@@ -214,7 +214,7 @@
     }
 
 	function main(){
-        initPixi(createControls());
+        initPixi(createControls);
         //runTest();
         //tests[4]();
         //setInterval(tests[4], 1111);

@@ -57,79 +57,114 @@
         var tests = new Array();
         var testI = 0;
 
-        tests[0] = function(){
+        var ti = 0;
+
+        tests[ti] = function(){
             jsTable = new JsTable(ROWS_COUNT, COLS_COUNT, CELL_PADDING, CELL_WIDTH);
             jsTable.createJsTable(TABLE_CONTAINER_ID);
         }
-        tests[0].title = 'Create javascript table test';
-        tests[0].setUp = null;
+        tests[ti].title = 'Create javascript table test';
+        tests[ti].setUp = null;
+        ++ti;
 
-        tests[1] = function(){
+        tests[ti] = function(){
             jsTable.fillJsTable();
         }
-        tests[1].title = 'Fill javascript table test';
-        tests[1].setUp = function() {
+        tests[ti].title = 'Fill javascript table test';
+        tests[ti].setUp = function(ti) {
             if (jsTable == null)
-                tests[0]();
+                tests[ti - 1]();
         };
+        ++ti;
 
-        tests[2] = function(){
+        tests[ti] = function(){
             kineticJsTable = new KineticJsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
                     COLS_COUNT, CELL_PADDING, CELL_WIDTH);
             kineticJsTable.createKineticJsTable();
         }
-        tests[2].title = 'Create kineticJs table test';
-        tests[2].setUp = null;
+        tests[ti].title = 'Create kineticJs table test';
+        tests[ti].setUp = null;
+        ++ti;
 
-        tests[3] = function(){
+        tests[ti] = function(){
             kineticJsTable.fillTable();
         }
-        tests[3].title = 'Fill kineticJs table test';
-        tests[3].setUp = function() {
+        tests[ti].title = 'Fill kineticJs table test';
+        tests[ti].setUp = function(ti) {
             if (kineticJsTable == null)
-                tests[2]();
+                tests[ti-1]();
         };
+        ++ti;
 
-        tests[4] = function(){
+        tests[ti] = function(){
             if (pixijsTable == null)
                 pixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
-                        COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+                        COLS_COUNT, CELL_PADDING, CELL_WIDTH, true);
             pixijsTable.createTable();
         }
-        tests[4].title = 'Create pixiJs table test';
-        tests[4].setUp = null;
+        tests[ti].title = 'Create WebGL pixiJs table test';
+        tests[ti].setUp = null;
+        ++ti;
 
-        tests[5] = function(){
+        tests[ti] = function(){
             pixijsTable.fillTable();
         }
-        tests[5].title = 'Fill pixiJs table test';
-        tests[5].setUp = function() {
-            tests[4]();
+        tests[ti].title = 'Fill WebGL pixiJs table test';
+        tests[ti].setUp = function(ti) {
+            tests[ti - 1]();
         };
+        ++ti;
 
-        tests[6] = function(){
-            zebrajsTable = new ZebrajsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
-                    COLS_COUNT, CELL_PADDING, CELL_WIDTH);
+        tests[ti] = function(){
+            if (cPixijsTable == null)
+                cPixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+                        COLS_COUNT, CELL_PADDING, CELL_WIDTH, false);
+            cPixijsTable.createTable();
+        }
+        tests[ti].title = 'Create canvas 2d context pixiJs table test';
+        tests[ti].setUp = null;
+        ++ti;
+
+        tests[ti] = function(){
+            cPixijsTable.fillTable();
+        }
+        tests[ti].title = 'Fill canvas 2d context pixiJs table test';
+        tests[ti].setUp = function(ti) {
+            tests[ti - 1]();
+        };
+        ++ti;
+
+        tests[ti] = function(){
+            if (zebrajsTable == null)
+                zebrajsTable = new ZebrajsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+                        COLS_COUNT, CELL_PADDING, CELL_WIDTH);
             zebrajsTable.createTable();
         }
-        tests[6].title = 'Create zebraJs table test';
-        tests[6].setUp = null;
+        tests[ti].title = 'Create zebraJs table test';
+        tests[ti].setUp = null;
+        ++ti;
 
-        tests[7] = function(){
+        tests[ti] = function(){
             zebrajsTable.fillTable();
         }
-        tests[7].title = 'Fill zebraJs table test';
-        tests[7].setUp = function() {
+        tests[ti].title = 'Fill zebraJs table test';
+        tests[ti].setUp = function(ti) {
             if (zebrajsTable == null)
-                tests[6]();
+                tests[ti - 1]();
         };
+        ++ti;
 
-        if (pixijsTable == null) {
-            pixijsTable= new PixijsTable(PIXI_TABLE_CONTAINER_ID, ROWS_COUNT,
-                    COLS_COUNT, CELL_PADDING, CELL_WIDTH);
-        }
+        if (pixijsTable == null)
+            pixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+                    COLS_COUNT, CELL_PADDING, CELL_WIDTH, true);
         if (!pixijsTable.fontsLoaded) {
-            pixijsTable.setUpFontsGlobal(fontsPath, true, function() { pixijsTable.createTable(); });
+            pixijsTable.setUpFonts(callBack);
+        }
+        if (cPixijsTable == null)
+            cPixijsTable= new PixijsTable(TABLE_CONTAINER_ID, ROWS_COUNT,
+                    COLS_COUNT, CELL_PADDING, CELL_WIDTH, false);
+        if (!cPixijsTable.fontsLoaded) {
+            cPixijsTable.setUpFonts(callBack);
         }
 
     };
