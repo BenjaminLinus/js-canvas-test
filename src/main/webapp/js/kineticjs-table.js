@@ -85,7 +85,7 @@ function KineticJsTable(containerId, rowsCount, colsCount, cellPadding, cellWidt
             height: fullHeight
         });
 
-        layer = new Kinetic.Layer();
+        layer = new Kinetic.FastLayer();
 
         var rect = new Kinetic.Rect({
             x: 0,
